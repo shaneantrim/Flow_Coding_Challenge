@@ -1,8 +1,8 @@
-Shotgrid Coding Challenge
+# Shotgrid Coding Challenge
 
 Python script that querys Shotgrid fields sg_cut_duration, sg_ip_versions and sg_latest_version without knowing the query fields filter conditions in advance. 
 
-Installation
+# Installation
 Install required packages pip install git+https://github.com/shotgunsoftware/python-api.git
 Create separate connection.py file to connect to the Shotgrid site and access the script using the following format:
 shotgun_url = "your shotgrid site"
@@ -13,3 +13,4 @@ Done!
 
 Running the script will create an output.html file in the same folder where the script lives that can be opened in a browser and will display all of the results for sg_cut_duration, sg_ip_versions and sg_latest_version in a table.
  
+<img width="1405" alt="results" src="https://github.com/user-attachments/assets/616daf74-e06d-444b-9b90-db5e56e36307">
