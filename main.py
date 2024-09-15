@@ -167,3 +167,93 @@ for sequence in sequences:
             }],
         )
         latest_version_summary[shot_id] = code_data
+
+
+def generate_html_file(result_cut_duration, result_ip_versions,
+                       latest_version_summary):
+    # HTML content with double curly braces for CSS
+    html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shotgun API Results</title>
+        <style>
+            body {{ font-family: Arial, sans-serif; margin: 20px; }}
+            table {{ border-collapse: collapse; width: 100%; margin-bottom: 20px; }}
+            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+            th {{ background-color: #f2f2f2; }}
+        </style>
+    </head>
+    <body>
+        <h1>Shotgun API Results</h1>
+
+        <h2>Cut Duration Summary</h2>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Average</th>
+            </tr>
+            <tr>
+                <td>sg_cut_duration</td>
+                <td>{cut_duration_avg}</td>
+            </tr>
+        </table>
+
+        <h2>IP Versions Summary</h2>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Record Count</th>
+            </tr>
+            <tr>
+                <td>code</td>
+                <td>{ip_versions_count}</td>
+            </tr>
+        </table>
+
+        <h2>Latest Version Summary</h2>
+        <table>
+            <tr>
+                <th>Shot ID</th>
+                <th>Latest Version Code</th>
+                <th>Created At</th>
+            </tr>
+            {latest_version_rows}
+        </table>
+    </body>
+    </html>
+    """
+
+    print("\nGenerating HTML content...")
+
+    # Extract the summary data
+    cut_duration_avg = result_cut_duration['summaries'].get(
+        'sg_cut_duration', 'N/A')
+    ip_versions_count = result_ip_versions['summaries'].get('code', 'N/A')
+
+    latest_version_rows = ""
+    for shot_id, version_info in latest_version_summary.items():
+        if version_info:
+            version_code = version_info.get('code', 'N/A')
+            created_at = version_info.get('created_at', 'N/A')
+        else:
+            version_code = "N/A"
+            created_at = "N/A"
+        latest_version_rows += f"<tr><td>{shot_id}</td><td>{version_code}</td><td>{created_at}</td></tr>"
+
+    # Format the HTML content with dynamic values
+    formatted_html = html_content.format(
+        cut_duration_avg=cut_duration_avg,
+        ip_versions_count=ip_versions_count,
+        latest_version_rows=latest_version_rows)
+
+    # Write the HTML content to a file
+    with open("output.html", "w") as f:
+        f.write(formatted_html)
+
+    print("HTML file 'output.html' has been created successfully.")
+
+
+# Generate HTML
+generate_html_file(sg_cut_duration, sg_ip_versions, latest_version_summary)
