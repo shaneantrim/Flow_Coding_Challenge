@@ -1,5 +1,6 @@
-#Untrack for security
+#Untrack
 connection.py
+myenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
