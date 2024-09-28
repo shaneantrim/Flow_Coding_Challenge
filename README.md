@@ -3,6 +3,7 @@
 Python script that queries Shotgrid fields sg_cut_duration, sg_ip_versions and sg_latest_version for a given project ID without knowing the query fields filter conditions in advance. 
 
 # Installation
+-Create virtual env with required version python 3.11 -m venv venv
 -Install required packages pip install git+https://github.com/shotgunsoftware/python-api.git <br />
 -Create separate connection.py file to connect to the Shotgrid site and access the script using the following format: <br />
 `shotgun_url = "your_shotgun_url"` <br />
